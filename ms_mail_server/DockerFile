@@ -1,0 +1,2 @@
+FROM sohophp/mailserver:dev
+# CMD /usr/local/bin/startup

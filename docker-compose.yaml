@@ -1,0 +1,55 @@
+version: "3.8"
+services:
+   ms_mail_server:
+      stdin_open: true
+      tty: true
+      build: 
+         context: ./
+         dockerfile: ms_mail_server/DockerFile
+      container_name: ms_mail_server     
+      depends_on:
+         - ms_mysql_master
+      links:
+         - ms_mysql_master:ms_mysql_master
+      volumes:
+         - "${VOLUMES_BASE}/etc/letsencrypt:/etc/letsencrypt"
+      ports:
+         - "50080:80"
+      expose:
+         - "110"
+         - "80"
+         - "443"
+         - "25"
+         - "465"
+      networks:
+         ms_net:
+            ipv4_address: 172.19.0.2
+      environment:
+         MAIL_SERVER_DOMAIN: ${MAIL_SERVER_DOMAIN} 
+   ms_mysql_master:
+      stdin_open: true
+      tty: true 
+      build:
+         context: ./
+         dockerfile: ms_mysql_master/DockerFile
+      container_name: ms_mysql_master
+      ports:
+         - "53306:3306"
+      volumes:
+         - "${VOLUMES_BASE}/var/lib/mysql/data:/var/lib/mysql/data"
+      environment:
+         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      networks:
+         ms_net:
+            ipv4_address: 172.19.0.3
+networks:
+   ms_net:
+      driver: bridge
+      name: ms_net
+      ipam:
+         driver: default
+         config:
+            - subnet: "172.19.0.0/24"
+              gateway: "172.19.0.1"
+              
+      
