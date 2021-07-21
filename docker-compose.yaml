@@ -32,6 +32,9 @@ services:
       restart: always
       # privileged: true
       user: root
+      # stdin_open: true # -i interactive
+      # tty: true # -t tty
+
    ms_mysql_master:
       stdin_open: true
       tty: true 
@@ -49,6 +52,9 @@ services:
          ms_net:
             ipv4_address: 172.19.0.3
       restart: always
+      # stdin_open: true # -i interactive
+      # tty: true # -t tty
+
 networks:
    ms_net:
       driver: bridge
