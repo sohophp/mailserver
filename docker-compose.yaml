@@ -25,10 +25,16 @@ services:
          ms_net:
             ipv4_address: 172.19.0.2
       environment:
-         MAIL_SERVER_DOMAIN: ${MAIL_SERVER_DOMAIN} 
+         MYSQL_MASTER_ROOT_PASSWORD: ${MYSQL_MASTER_ROOT_PASSWORD}
+         MYSQL_MASTER_DATABASE: ${MYSQL_MASTER_DATABASE}
+         MYSQL_MASTER_USER: ${MYSQL_MASTER_USER}
+         MYSQL_MASTER_PASSWORD: ${MYSQL_MASTER_PASSWORD}
+         MYSQL_MASTER_HOST: ${MYSQL_MASTER_HOST}
+         MAIL_SERVER_DOMAIN: ${MAIL_SERVER_DOMAIN}
+         MAIL_ADMIN_HOST: ${MAIL_ADMIN_HOST}
+         MAIL_HOST: ${MAIL_HOST}
+
       extra_hosts:
-         - "googledns:8.8.8.8"
-         - "dockerhub:52.1.157.61"
          - "ms_mysql_master:172.19.0.3"
       restart: always
       # privileged: true
