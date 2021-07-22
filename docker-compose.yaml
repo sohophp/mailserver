@@ -29,11 +29,10 @@ services:
       extra_hosts:
          - "googledns:8.8.8.8"
          - "dockerhub:52.1.157.61"
+         - "ms_mysql_master:172.19.0.3"
       restart: always
       # privileged: true
       user: root
-      # stdin_open: true # -i interactive
-      # tty: true # -t tty
 
    ms_mysql_master:
       stdin_open: true
@@ -47,13 +46,11 @@ services:
       volumes:
          - "${VOLUMES_BASE}/var/lib/mysql/data:/var/lib/mysql/data"
       environment:
-         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+         - MYSQL_ROOT_PASSWORD=${MYSQL_MASTER_ROOT_PASSWORD}
       networks:
          ms_net:
             ipv4_address: 172.19.0.3
       restart: always
-      # stdin_open: true # -i interactive
-      # tty: true # -t tty
 
 networks:
    ms_net:

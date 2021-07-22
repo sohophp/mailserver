@@ -1,2 +1,2 @@
-FROM sohophp/mailserver:dev
+FROM mailserver:dev
 # CMD /usr/local/bin/startup
