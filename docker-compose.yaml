@@ -14,7 +14,7 @@ services:
       #volumes:
       #   - "${VOLUMES_BASE}/etc/letsencrypt:/etc/letsencrypt"
       ports:
-         - "50025:25"
+         - "25:25"
          - "587:587"
          - "465:465"
          - "143:143"
@@ -24,6 +24,13 @@ services:
       expose:
          - "80"
          - "443"
+         - "25"
+         - "587"
+         - "465"
+         - "143"
+         - "993"
+         - "110"
+         - "995"
 
       networks:
          ms_net:
@@ -42,9 +49,10 @@ services:
       extra_hosts:
          - "ms_mysql_master:172.19.0.3"
       restart: always
-      privileged: true
-      user: root
-
+      #privileged: true
+      #user: root
+      command: ["/usr/bin/startup"]
+   
    ms_mysql_master:
       stdin_open: true
       tty: true 
