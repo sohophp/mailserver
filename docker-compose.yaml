@@ -11,16 +11,20 @@ services:
          - ms_mysql_master
       # links:
       #    - ms_mysql_master:ms_mysql_master
-      volumes:
-         - "${VOLUMES_BASE}/etc/letsencrypt:/etc/letsencrypt"
+      #volumes:
+      #   - "${VOLUMES_BASE}/etc/letsencrypt:/etc/letsencrypt"
       ports:
-         - "50080:80"
+         - "50025:25"
+         - "587:587"
+         - "465:465"
+         - "143:143"
+         - "993:993"
+         - "110:110"
+         - "995:995"         
       expose:
-         - "110"
          - "80"
          - "443"
-         - "25"
-         - "465"
+
       networks:
          ms_net:
             ipv4_address: 172.19.0.2
@@ -31,13 +35,14 @@ services:
          MYSQL_MASTER_PASSWORD: ${MYSQL_MASTER_PASSWORD}
          MYSQL_MASTER_HOST: ${MYSQL_MASTER_HOST}
          MAIL_SERVER_DOMAIN: ${MAIL_SERVER_DOMAIN}
+         MAIL_SERVER_HOST: ${MAIL_SERVER_HOST}
          MAIL_ADMIN_HOST: ${MAIL_ADMIN_HOST}
          MAIL_HOST: ${MAIL_HOST}
 
       extra_hosts:
          - "ms_mysql_master:172.19.0.3"
       restart: always
-      # privileged: true
+      privileged: true
       user: root
 
    ms_mysql_master:
@@ -50,7 +55,7 @@ services:
       ports:
          - "53306:3306"
       volumes:
-         - "${VOLUMES_BASE}/var/lib/mysql/data:/var/lib/mysql/data"
+         - "${VOLUMES_BASE}/var/lib/mysql:/var/lib/mysql"
       environment:
          - MYSQL_ROOT_PASSWORD=${MYSQL_MASTER_ROOT_PASSWORD}
       networks:
